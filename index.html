@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The VideoStation</title>
+    <style>
+        /* This makes it look like a gaming console */
+        body {
+            background-color: #1a1a2e;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin: 0;
+            overflow: hidden; /* Keeps everything on one screen */
+        }
+
+        #top-bar {
+            background-color: #16213e;
+            padding: 15px;
+            border-bottom: 4px solid #e94560;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 50px;
+        }
+
+        /* THE GAME BOX */
+        #game-box {
+            margin: 30px auto;
+            width: 485px; 
+            height: 402px;
+            background-color: black;
+            border: 8px solid #4ecca3;
+            border-radius: 10px;
+            box-shadow: 0px 0px 30px rgba(78, 204, 163, 0.3);
+        }
+
+        /* THE SELECTION MENU */
+        #menu {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #16213e;
+            padding: 25px;
+            border-top: 2px solid #555;
+        }
+
+        button {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        button:hover {
+            background-color: #ff2e63;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="top-bar">
+        <h2>THE VIDEOSTATION</h2>
+        <h2>Coins: <span id="coins">100</span></h2>
+    </div>
+
+    <div id="game-box">
+        <iframe id="main-screen" src="https://scratch.mit.edu/projects/1267120270/embed" width="485" height="402" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div id="menu">
+        <button onclick="playGame('https://scratch.mit.edu/projects/1267120461/embed')">Cosmo Fighters</button>
+        <button onclick="openShop()">Open Shop</button>
+    </div>
+
+    <script>
+        // Logic for the buttons
+        function playGame(link) {
+            document.getElementById('main-screen').src = link;
+        }
+
+        function openShop() {
+            alert("Shop Loading... You have 100 coins!");
+            // Later, we can make this open a new menu!
+        }
+    </script>
+
+</body>
+</html>
+
