@@ -1,154 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>The VideoStation</title>
+    <title>VideoStation Pro</title>
     <style>
-        body { background-color: #1a1a2e; color: white; font-family: sans-serif; text-align: center; margin: 0; }
+        body { background-color: #1a1a2e; color: white; font-family: sans-serif; text-align: center; margin: 0; padding: 0; }
         
-        /* HOME MENU SCREEN */
-        #home-menu { padding: 50px; }
-        
-        .game-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
+        /* ALL SCREENS HIDDEN BY DEFAULT */
+        .screen { display: none; padding: 50px 20px; }
+
+        /* BUTTONS & INPUTS */
+        input { padding: 12px; border-radius: 5px; border: none; width: 250px; font-size: 16px; margin: 10px auto; display: block; }
+        .btn { background: #e94560; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.2s; }
+        .btn:hover { background: #ff2e63; transform: scale(1.05); }
+        .link-btn { background: none; color: #4ecca3; border: none; cursor: pointer; text-decoration: underline; margin-top: 20px; font-size: 14px; }
+
+        /* MENU & PLAYER */
+        .user-info { background: #16213e; padding: 15px; border-bottom: 2px solid #4ecca3; display: flex; justify-content: space-around; align-items: center; }
+        .game-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 30px; }
+        .game-card { background: #16213e; border: 3px solid #4ecca3; padding: 20px; width: 180px; border-radius: 15px; cursor: pointer; }
+        #game-screen-box { margin: 20px auto; width: 485px; height: 402px; border: 10px solid #e94560; background: black; border-radius: 10px; }
+
+        /* SECURITY POPUP */
+        #password-modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center; 
         }
-
-        .game-card {
-            background: #16213e;
-            border: 3px solid #4ecca3;
-            padding: 20px;
-            width: 200px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .game-card:hover { transform: scale(1.05); background: #1b2a4e; }
-
-        /* PLAYER SCREEN (Hidden by default) */
-        #game-player { display: none; padding: 20px; }
-        
-        #game-screen-box {
-            margin: 20px auto;
-            width: 485px; 
-            height: 402px;
-            border: 10px solid #e94560;
-            background: black;
-        }
-
-        .back-btn { background: #e94560; color: white; padding: 10px 25px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-    </style>
-</head>
-<body>
-
-    <div id="home-menu">
-        <h1>THE VIDEOSTATION</h1>
-        <div class="game-grid">
-            <div class="game-card" onclick="playGame('1267120461', 'Cosmo Fighters')">
-                <h2>🚀 Cosmo Fighters</h2>
-                <p>Click to Play</p>
-            </div>
-
-            <div class="game-card" onclick="playGame('1267149682', 'VS-TV')">
-                <h2>📱VS-TV</h2>
-                <p>Click to watch!</p>
-            </div>
-
-            <div class="game-card" onclick="playGame('1258223349', 'War of the forms')">
-                <h2>🎮 War of the forms</h2>
-                <p>click to play! btw click flag twice then play then click the flag twice and click play to see the buttons.</p>
-            </div>
-
-            <div class="game-card" onclick="playGame('ID_HERE', 'New App 3')">
-                <h2>🌟 Game 3</h2>
-                <p>Coming Soon</p>
-            </div>
-
-            <div class="game-card" onclick="playGame('ID_HERE', 'New App 4')">
-                <h2>🛠️ Tool 1</h2>
-                <p>Coming Soon</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="game-player">
-        <button class="back-btn" onclick="goHome()">⬅ BACK TO MENU</button>
-        <h2 id="now-playing">Loading...</h2>
-        <div id="game-screen-box">
-            <iframe id="main-iframe" src="" width="485" height="402" frameborder="0"></iframe>
-        </div>
-    </div>
-
-    <script>
-        function playGame(id, name) {
-            // Only play if you have put an ID in, otherwise it tells you it's coming soon
-            if (id === 'ID_HERE') {
-                alert("This slot is empty! Add a Scratch ID in your code to play.");
-                return;
-            }
-            
-            // Switch screens
-            document.getElementById('main-iframe').src = "https://scratch.mit.edu/projects/" + id + "/embed";
-            document.getElementById('now-playing').innerText = "Now Playing: " + name;
-            document.getElementById('home-menu').style.display = 'none';
-            document.getElementById('game-player').style.display = 'block';
-        }
-
-        function goHome() {
-            // Reset screens
-            document.getElementById('main-iframe').src = "";
-            document.getElementById('game-player').style.display = 'none';
-            document.getElementById('home-menu').style.display = 'block';
-        }
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html>
-<head>
-    <title>VideoStation Accounts</title>
-    <style>
-        body { background-color: #1a1a2e; color: white; font-family: sans-serif; text-align: center; margin: 0; }
-        
-        /* LOGIN SCREEN */
-        #login-screen { padding: 100px 20px; display: block; }
-        input { padding: 10px; border-radius: 5px; border: none; width: 200px; font-size: 16px; }
-        
-        /* HOME & PLAYER (Hidden at start) */
-        #home-menu, #game-player { display: none; }
-
-        .user-info { background: #16213e; padding: 10px; border-bottom: 2px solid #4ecca3; display: flex; justify-content: space-around; }
-        .game-card { background: #16213e; border: 3px solid #4ecca3; padding: 20px; width: 200px; display: inline-block; margin: 10px; border-radius: 15px; cursor: pointer; }
-        #game-screen-box { margin: 20px auto; width: 485px; height: 402px; border: 10px solid #e94560; background: black; }
-        .btn { background: #e94560; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        .modal-content { background:#16213e; padding:30px; border:3px solid #e94560; border-radius:15px; }
     </style>
 </head>
 <body onload="checkAccount()">
 
-    <div id="login-screen">
-        <h1>WELCOME TO VIDEOSTATION</h1>
-        <p>Create your Gamer Tag to start playing:</p>
-        <input type="text" id="username-input" placeholder="Enter Name...">
+    <div id="login-screen" class="screen" style="display: block;">
+        <h1>VIDEOSTATION LOGIN</h1>
+        <input type="text" id="login-username" placeholder="Username">
+        <input type="password" id="login-password" placeholder="Password">
+        <button class="btn" onclick="attemptLogin()">Login</button>
         <br>
-        <button class="btn" onclick="createAccount()">Start Playing</button>
+        <button class="link-btn" onclick="showScreen('signup-screen')">Don't have an account? Create one!</button>
     </div>
 
-    <div id="home-menu">
+    <div id="signup-screen" class="screen">
+        <h1>CREATE ACCOUNT</h1>
+        <p>Choose a name that isn't taken!</p>
+        <input type="text" id="signup-username" placeholder="Enter New Username">
+        <button class="btn" onclick="registerUser()">Create Account</button>
+        <br>
+        <button class="link-btn" onclick="showScreen('login-screen')">Back to Login</button>
+    </div>
+
+    <div id="password-modal">
+        <div class="modal-content">
+            <h2 style="color:#e94560;">⚠️ SECURITY ALERT</h2>
+            <p>You must create a password for your account.</p>
+            <button class="btn" onclick="showScreen('password-center')">OK</button>
+        </div>
+    </div>
+
+    <div id="password-center" class="screen">
+        <h1>Set Your Password</h1>
+        <input type="password" id="new-password" placeholder="Enter Password">
+        <button class="btn" onclick="savePassword()">Save & Start Playing</button>
+    </div>
+
+    <div id="home-menu" class="screen">
         <div class="user-info">
-            <span>Player: <b id="display-name">Guest</b></span>
-            <span>Coins: <b id="user-coins">100</b></span>
-            <button onclick="logout()" style="background:none; color:grey; border:none; cursor:pointer;">Logout</button>
+            <span>Player: <b id="display-name">...</b></span>
+            <button onclick="logout()" class="link-btn" style="margin:0; color:grey;">Logout</button>
         </div>
         <h1>THE VIDEOSTATION</h1>
-        <div class="game-card" onclick="playGame('YOUR_SCRATCH_ID', 'Cosmo Fighters')">
-            <h2>🚀 Cosmo Fighters</h2>
+        <div class="game-grid">
+            <div class="game-card" onclick="playGame('1267120461', 'Cosmo Fighters')"><h2>🚀 Cosmo Fighters</h2></div>
+            <div class="game-card" onclick="playGame('1267149682', 'VideoStationTV')"><h2>🎮 VS TV</h2></div>
+            <div class="game-card" onclick="playGame('ID_HERE', 'Slot 3')"><h2>🎮 Slot 3</h2></div>
+            <div class="game-card" onclick="playGame('ID_HERE', 'Slot 4')"><h2>🎮 Slot 4</h2></div>
+            <div class="game-card" onclick="playGame('ID_HERE', 'Slot 5')"><h2>🎮 Slot 5</h2></div>
         </div>
-        </div>
+    </div>
 
-    <div id="game-player">
+    <div id="game-player" class="screen">
         <button class="btn" onclick="goHome()">⬅ Back to Menu</button>
         <h2 id="now-playing">Loading...</h2>
         <div id="game-screen-box">
@@ -157,47 +86,106 @@
     </div>
 
     <script>
-        // Check if the user already has an account saved
+        // Check if user is already logged in when page opens
         function checkAccount() {
-            let savedName = localStorage.getItem("username");
-            if (savedName) {
-                showMenu(savedName);
+            let sessionUser = sessionStorage.getItem("currentUser");
+            if (sessionUser) {
+                showMenu(sessionUser);
             }
         }
 
-        function createAccount() {
-            let name = document.getElementById("username-input").value;
-            if (name.length < 2) {
-                alert("Please enter a longer name!");
+        // The Switcher: Hides all screens and shows the one you want
+        function showScreen(screenId) {
+            let screens = document.getElementsByClassName('screen');
+            for (let s of screens) {
+                s.style.display = "none";
+            }
+            document.getElementById('password-modal').style.display = "none";
+            
+            // Show the target screen
+            if (screenId === 'password-modal') {
+                document.getElementById(screenId).style.display = "flex";
+            } else {
+                document.getElementById(screenId).style.display = "block";
+            }
+        }
+
+        // REGISTER NEW USER
+        function registerUser() {
+            let user = document.getElementById("signup-username").value.trim();
+            
+            if (user === "") {
+                alert("Please enter a username!");
                 return;
             }
-            // Save the name to the browser memory
-            localStorage.setItem("username", name);
-            showMenu(name);
+
+            // USERNAME TAKEN CHECK
+            if (localStorage.getItem("user_" + user)) {
+                alert("WARNING: Username Taken! Please choose another.");
+            } else {
+                // Save name and show password alert
+                localStorage.setItem("user_" + user, "exists");
+                localStorage.setItem("temp_username", user); // Temp storage until password is set
+                showScreen('password-modal');
+            }
+        }
+
+        // LOGIN EXISTING USER
+        function attemptLogin() {
+            let user = document.getElementById("login-username").value.trim();
+            let pass = document.getElementById("login-password").value;
+            let savedPass = localStorage.getItem("pass_" + user);
+
+            if (localStorage.getItem("user_" + user)) {
+                if (pass === savedPass) {
+                    sessionStorage.setItem("currentUser", user);
+                    showMenu(user);
+                } else {
+                    alert("Wrong password!");
+                }
+            } else {
+                alert("Account not found! Click 'Create One'.");
+            }
+        }
+
+        // SAVE PASSWORD
+        function savePassword() {
+            let user = localStorage.getItem("temp_username");
+            let pass = document.getElementById("new-password").value;
+            
+            if (pass.length < 1) {
+                alert("Please enter a password!");
+                return;
+            }
+
+            localStorage.setItem("pass_" + user, pass);
+            sessionStorage.setItem("currentUser", user); // Log them in automatically
+            showMenu(user);
         }
 
         function showMenu(name) {
             document.getElementById("display-name").innerText = name;
-            document.getElementById("login-screen").style.display = "none";
-            document.getElementById("home-menu").style.display = "block";
+            showScreen('home-menu');
         }
 
         function logout() {
-            localStorage.removeItem("username"); // Delete the saved account
-            location.reload(); // Refresh the page to show login screen
+            sessionStorage.clear();
+            location.reload();
         }
 
         function playGame(id, name) {
+            if (id === 'ID_HERE') {
+                alert("This slot is empty!");
+                return;
+            }
             document.getElementById('main-iframe').src = "https://scratch.mit.edu/projects/" + id + "/embed";
             document.getElementById('now-playing').innerText = name;
-            document.getElementById('home-menu').style.display = 'none';
-            document.getElementById('game-player').style.display = 'block';
+            showScreen('game-player');
         }
 
         function goHome() {
-            document.getElementById('main-iframe').src = "";
-            document.getElementById('game-player').style.display = 'none';
-            document.getElementById('home-menu').style.display = 'block';
+            document.getElementById('main-iframe').src = ""; // Stops game music
+            showScreen('home-menu');
         }
     </script>
 </body>
