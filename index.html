@@ -3,32 +3,106 @@
 <head>
     <title>VideoStation Pro</title>
     <style>
-        body { background-color: #1a1a2e; color: white; font-family: sans-serif; text-align: center; margin: 0; padding: 0; }
+        /* THEME VARIABLES */
+        :root {
+            --bg-color: #1a1a2e;
+            --secondary-bg: #16213e;
+            --accent-color: #e94560;
+            --highlight-color: #4ecca3;
+            --text-color: white;
+        }
+
+        /* THEME: EMERALD */
+        .theme-emerald {
+            --bg-color: #062e1a;
+            --secondary-bg: #0b4128;
+            --accent-color: #4ecca3;
+            --highlight-color: #f1c40f;
+        }
+
+        /* THEME: CYBERPUNK */
+        .theme-cyber {
+            --bg-color: #2b0035;
+            --secondary-bg: #4a005c;
+            --accent-color: #00fff2;
+            --highlight-color: #ff00ff;
+        }
+
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            font-family: sans-serif; 
+            text-align: center; 
+            margin: 0; 
+            padding: 0; 
+            transition: background 0.5s ease; /* Makes theme switching smooth */
+        }
         
-        /* ALL SCREENS HIDDEN BY DEFAULT */
         .screen { display: none; padding: 50px 20px; }
 
-        /* BUTTONS & INPUTS */
         input { padding: 12px; border-radius: 5px; border: none; width: 250px; font-size: 16px; margin: 10px auto; display: block; }
-        .btn { background: #e94560; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.2s; }
-        .btn:hover { background: #ff2e63; transform: scale(1.05); }
-        .link-btn { background: none; color: #4ecca3; border: none; cursor: pointer; text-decoration: underline; margin-top: 20px; font-size: 14px; }
+        
+        .btn { 
+            background: var(--accent-color); 
+            color: white; 
+            padding: 12px 25px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 16px; 
+            transition: 0.2s; 
+        }
+        .btn:hover { filter: brightness(1.2); transform: scale(1.05); }
+        
+        .link-btn { background: none; color: var(--highlight-color); border: none; cursor: pointer; text-decoration: underline; margin-top: 20px; font-size: 14px; }
 
-        /* MENU & PLAYER */
-        .user-info { background: #16213e; padding: 15px; border-bottom: 2px solid #4ecca3; display: flex; justify-content: space-around; align-items: center; }
+        .user-info { 
+            background: var(--secondary-bg); 
+            padding: 15px; 
+            border-bottom: 2px solid var(--highlight-color); 
+            display: flex; 
+            justify-content: space-around; 
+            align-items: center; 
+        }
+
         .game-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 30px; }
-        .game-card { background: #16213e; border: 3px solid #4ecca3; padding: 20px; width: 180px; border-radius: 15px; cursor: pointer; }
-        #game-screen-box { margin: 20px auto; width: 485px; height: 402px; border: 10px solid #e94560; background: black; border-radius: 10px; }
+        
+        .game-card { 
+            background: var(--secondary-bg); 
+            border: 3px solid var(--highlight-color); 
+            padding: 20px; 
+            width: 180px; 
+            border-radius: 15px; 
+            cursor: pointer; 
+        }
 
-        /* SECURITY POPUP */
+        #game-screen-box { 
+            margin: 20px auto; 
+            width: 485px; 
+            height: 402px; 
+            border: 10px solid var(--accent-color); 
+            background: black; 
+            border-radius: 10px; 
+        }
+
+        /* THEME SELECTOR STYLING */
+        #theme-select {
+            padding: 5px;
+            border-radius: 5px;
+            background: var(--bg-color);
+            color: white;
+            border: 1px solid var(--highlight-color);
+        }
+
         #password-modal { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center; 
         }
-        .modal-content { background:#16213e; padding:30px; border:3px solid #e94560; border-radius:15px; }
+        .modal-content { background: var(--secondary-bg); padding:30px; border:3px solid var(--accent-color); border-radius:15px; }
     </style>
 </head>
-<body onload="checkAccount()">
+<body id="main-body" onload="checkAccount()">
 
     <div id="login-screen" class="screen" style="display: block;">
         <h1>VIDEOSTATION LOGIN</h1>
@@ -41,7 +115,6 @@
 
     <div id="signup-screen" class="screen">
         <h1>CREATE ACCOUNT</h1>
-        <p>Choose a name that isn't taken!</p>
         <input type="text" id="signup-username" placeholder="Enter New Username">
         <button class="btn" onclick="registerUser()">Create Account</button>
         <br>
@@ -50,7 +123,7 @@
 
     <div id="password-modal">
         <div class="modal-content">
-            <h2 style="color:#e94560;">⚠️ SECURITY ALERT</h2>
+            <h2 style="color:var(--accent-color);">⚠️ SECURITY ALERT</h2>
             <p>You must create a password for your account.</p>
             <button class="btn" onclick="showScreen('password-center')">OK</button>
         </div>
@@ -65,14 +138,24 @@
     <div id="home-menu" class="screen">
         <div class="user-info">
             <span>Player: <b id="display-name">...</b></span>
+            
+            <div>
+                Theme: 
+                <select id="theme-select" onchange="changeTheme(this.value)">
+                    <option value="default">Midnight</option>
+                    <option value="emerald">Emerald City</option>
+                    <option value="cyber">Cyberpunk</option>
+                </select>
+            </div>
+
             <button onclick="logout()" class="link-btn" style="margin:0; color:grey;">Logout</button>
         </div>
         <h1>THE VIDEOSTATION</h1>
         <div class="game-grid">
             <div class="game-card" onclick="playGame('1267120461', 'Cosmo Fighters')"><h2>🚀 Cosmo Fighters</h2></div>
-            <div class="game-card" onclick="playGame('1267149682', 'VideoStationTV')"><h2>🎮 VS TV</h2></div>
-            <div class="game-card" onclick="playGame('ID_HERE', 'Slot 3')"><h2>🎮 Slot 3</h2></div>
-            <div class="game-card" onclick="playGame('ID_HERE', 'Slot 4')"><h2>🎮 Slot 4</h2></div>
+            <div class="game-card" onclick="playGame('1267149682', 'Vs-TV')"><h2>🎮 Vs-TV</h2></div>
+            <div class="game-card" onclick="playGame('ID_HERE', '🔒War of the forms')"><h2>🔒War of the forms</h2></div>
+            <div class="game-card" onclick="playGame('ID_HERE', '🔒NPC playground')"><h2>🔒S NPC playground</h2></div>
             <div class="game-card" onclick="playGame('ID_HERE', 'Slot 5')"><h2>🎮 Slot 5</h2></div>
         </div>
     </div>
@@ -86,23 +169,41 @@
     </div>
 
     <script>
-        // Check if user is already logged in when page opens
+        // Load account and theme when page opens
         function checkAccount() {
             let sessionUser = sessionStorage.getItem("currentUser");
+            
+            // Apply saved theme
+            let savedTheme = localStorage.getItem("preferredTheme");
+            if (savedTheme) {
+                changeTheme(savedTheme);
+                document.getElementById('theme-select').value = savedTheme;
+            }
+
             if (sessionUser) {
                 showMenu(sessionUser);
             }
         }
 
-        // The Switcher: Hides all screens and shows the one you want
+        // CHANGE THEME FUNCTION
+        function changeTheme(themeName) {
+            let body = document.getElementById("main-body");
+            // Remove old theme classes
+            body.classList.remove("theme-emerald", "theme-cyber");
+            
+            // Add new one if it's not default
+            if (themeName === "emerald") body.classList.add("theme-emerald");
+            if (themeName === "cyber") body.classList.add("theme-cyber");
+
+            // Save choice so it stays when you refresh
+            localStorage.setItem("preferredTheme", themeName);
+        }
+
         function showScreen(screenId) {
             let screens = document.getElementsByClassName('screen');
-            for (let s of screens) {
-                s.style.display = "none";
-            }
+            for (let s of screens) { s.style.display = "none"; }
             document.getElementById('password-modal').style.display = "none";
             
-            // Show the target screen
             if (screenId === 'password-modal') {
                 document.getElementById(screenId).style.display = "flex";
             } else {
@@ -110,27 +211,19 @@
             }
         }
 
-        // REGISTER NEW USER
         function registerUser() {
             let user = document.getElementById("signup-username").value.trim();
-            
-            if (user === "") {
-                alert("Please enter a username!");
-                return;
-            }
+            if (user === "") { alert("Please enter a username!"); return; }
 
-            // USERNAME TAKEN CHECK
             if (localStorage.getItem("user_" + user)) {
-                alert("WARNING: Username Taken! Please choose another.");
+                alert("WARNING: Username Taken!");
             } else {
-                // Save name and show password alert
                 localStorage.setItem("user_" + user, "exists");
-                localStorage.setItem("temp_username", user); // Temp storage until password is set
+                localStorage.setItem("temp_username", user);
                 showScreen('password-modal');
             }
         }
 
-        // LOGIN EXISTING USER
         function attemptLogin() {
             let user = document.getElementById("login-username").value.trim();
             let pass = document.getElementById("login-password").value;
@@ -140,26 +233,16 @@
                 if (pass === savedPass) {
                     sessionStorage.setItem("currentUser", user);
                     showMenu(user);
-                } else {
-                    alert("Wrong password!");
-                }
-            } else {
-                alert("Account not found! Click 'Create One'.");
-            }
+                } else { alert("Wrong password!"); }
+            } else { alert("Account not found!"); }
         }
 
-        // SAVE PASSWORD
         function savePassword() {
             let user = localStorage.getItem("temp_username");
             let pass = document.getElementById("new-password").value;
-            
-            if (pass.length < 1) {
-                alert("Please enter a password!");
-                return;
-            }
-
+            if (pass.length < 1) { alert("Please enter a password!"); return; }
             localStorage.setItem("pass_" + user, pass);
-            sessionStorage.setItem("currentUser", user); // Log them in automatically
+            sessionStorage.setItem("currentUser", user);
             showMenu(user);
         }
 
@@ -174,17 +257,14 @@
         }
 
         function playGame(id, name) {
-            if (id === 'ID_HERE') {
-                alert("This slot is empty!");
-                return;
-            }
+            if (id === 'ID_HERE') { alert("This slot is empty!"); return; }
             document.getElementById('main-iframe').src = "https://scratch.mit.edu/projects/" + id + "/embed";
             document.getElementById('now-playing').innerText = name;
             showScreen('game-player');
         }
 
         function goHome() {
-            document.getElementById('main-iframe').src = ""; // Stops game music
+            document.getElementById('main-iframe').src = "";
             showScreen('home-menu');
         }
     </script>
